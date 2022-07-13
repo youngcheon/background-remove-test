@@ -34,14 +34,16 @@ function ViewerCard(props: ViewerCardProps) {
         onLoad={setSourcePlayback}
       />
       {sourcePlayback && props.bodyPix && props.tflite ? (
-        <OutputViewer
-          sourcePlayback={sourcePlayback}
-          backgroundConfig={props.backgroundConfig}
-          segmentationConfig={props.segmentationConfig}
-          postProcessingConfig={props.postProcessingConfig}
-          bodyPix={props.bodyPix}
-          tflite={props.tflite}
-        />
+        <div id="target">
+          <OutputViewer
+            sourcePlayback={sourcePlayback}
+            backgroundConfig={props.backgroundConfig}
+            segmentationConfig={props.segmentationConfig}
+            postProcessingConfig={props.postProcessingConfig}
+            bodyPix={props.bodyPix}
+            tflite={props.tflite}
+          />
+        </div>
       ) : (
         <div className={classes.noOutput}>
           <Avatar className={classes.avatar} />

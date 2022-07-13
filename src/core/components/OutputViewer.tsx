@@ -48,7 +48,7 @@ function OutputViewer(props: OutputViewerProps) {
 
   return (
     <div className={classes.root}>
-      {props.backgroundConfig.type === 'image' && (
+      {/* {props.backgroundConfig.type === 'image' && (
         <img
           ref={backgroundImageRef}
           className={classes.render}
@@ -56,16 +56,18 @@ function OutputViewer(props: OutputViewerProps) {
           alt=""
           hidden={props.segmentationConfig.pipeline === 'webgl2'}
         />
-      )}
-      <canvas
-        // The key attribute is required to create a new canvas when switching
-        // context mode
-        key={props.segmentationConfig.pipeline}
-        ref={canvasRef}
-        className={classes.render}
-        width={props.sourcePlayback.width}
-        height={props.sourcePlayback.height}
-      />
+      )} */}
+      <div id="capture">
+        <canvas
+          // The key attribute is required to create a new canvas when switching
+          // context mode
+          key={props.segmentationConfig.pipeline}
+          ref={canvasRef}
+          className={classes.render}
+          width={props.sourcePlayback.width}
+          height={props.sourcePlayback.height}
+        />
+      </div>
     </div>
   )
 }
@@ -79,7 +81,7 @@ const useStyles = makeStyles((theme: Theme) =>
     render: {
       top: 0,
       left: 0,
-      position: 'absolute',
+      position: 'static',
       width: '500px',
       height: '500px',
       objectFit: 'cover',

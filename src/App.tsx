@@ -7,7 +7,7 @@ import { SegmentationConfig } from './core/helpers/segmentationHelper'
 import { SourceConfig, sourceImageUrls } from './core/helpers/sourceHelper'
 import useBodyPix from './core/hooks/useBodyPix'
 import useTFLite from './core/hooks/useTFLite'
-import imgfile from './iu3.png'
+import html2canvas from 'html2canvas'
 
 function App() {
   const classes = useStyles()
@@ -46,21 +46,41 @@ function App() {
       }
     })
   }, [isSIMDSupported])
+  let url: string = ''
+  const onCapture = () => {
+    let temp = document.getElementById('capture')
+    if (temp) {
+      html2canvas(temp).then((canvas) => {
+        let myimg = canvas.toDataURL('image/png')
+        OnSaveAs(myimg, 'image-download.png')
+      })
+    }
+  }
+  const OnSaveAs = (uri: string, filename: string) => {
+    var link = document.createElement('a')
+    document.body.appendChild(link)
+    link.href = uri
+    link.download = filename
+    link.click()
+    document.body.removeChild(link)
+  }
 
   return (
-    <div>
-      <div className={classes.image}>
-        <img src={imgfile}></img>
-        <ViewerCard
-          sourceConfig={sourceConfig}
-          backgroundConfig={backgroundConfig}
-          segmentationConfig={segmentationConfig}
-          postProcessingConfig={postProcessingConfig}
-          bodyPix={bodyPix}
-          tflite={tflite}
-        />
+    <>
+      <div>
+        <div className={classes.image} id="cap">
+          <ViewerCard
+            sourceConfig={sourceConfig}
+            backgroundConfig={backgroundConfig}
+            segmentationConfig={segmentationConfig}
+            postProcessingConfig={postProcessingConfig}
+            bodyPix={bodyPix}
+            tflite={tflite}
+          />
+        </div>
       </div>
-    </div>
+      <button onClick={onCapture}>저장</button>
+    </>
   )
 }
 
