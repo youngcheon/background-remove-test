@@ -8,6 +8,7 @@ import { SourceConfig, sourceImageUrls } from './core/helpers/sourceHelper'
 import useBodyPix from './core/hooks/useBodyPix'
 import useTFLite from './core/hooks/useTFLite'
 import html2canvas from 'html2canvas'
+import { ImgurClient } from 'imgur'
 
 function App() {
   const classes = useStyles()
@@ -46,12 +47,13 @@ function App() {
       }
     })
   }, [isSIMDSupported])
-  let url: string = ''
+
   const onCapture = () => {
     let temp = document.getElementById('capture')
     if (temp) {
       html2canvas(temp).then((canvas) => {
         let myimg = canvas.toDataURL('image/png')
+        let url = myimg.split(',')[1]
         OnSaveAs(myimg, 'image-download.png')
       })
     }
@@ -64,11 +66,10 @@ function App() {
     link.click()
     document.body.removeChild(link)
   }
-
   return (
     <>
       <div>
-        <div className={classes.image} id="cap">
+        <div className={classes.box}>
           <ViewerCard
             sourceConfig={sourceConfig}
             backgroundConfig={backgroundConfig}
@@ -86,30 +87,13 @@ function App() {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    image: {
-      float: 'left',
+    box: {
+      // float: 'left',
       position: 'relative',
-      margin: 0,
+      // margin: 0,
     },
-    root: {
-      // display: 'grid',
-      // [theme.breakpoints.up('xs')]: {
-      //   margin: theme.spacing(1),
-      //   gap: theme.spacing(1),
-      //   gridTemplateColumns: '1fr',
-      // },
-      // [theme.breakpoints.up('md')]: {
-      //   margin: theme.spacing(2),
-      //   gap: theme.spacing(2),
-      //   gridTemplateColumns: 'repeat(2, 1fr)',
-      // },
-      // [theme.breakpoints.up('lg')]: {
-      //   gridTemplateColumns: 'repeat(3, 1fr)',
-      // },
-      // },
-      // resourceSelectionCards: {
-      //   display: 'flex',
-      //   flexDirection: 'column',
+    image: {
+      poistion: 'absolute',
     },
   })
 )
